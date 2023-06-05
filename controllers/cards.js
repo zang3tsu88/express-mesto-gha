@@ -51,7 +51,14 @@ const deleteCardById = (req, res) => {
       return res.send(card);
     })
     .catch((err) => {
-      res.status(500).send({
+      if (err.name === "CastError") {
+        return res.status(400).send({
+          message: "Entered invalid data.",
+          err: err.message,
+          stack: err.stack,
+        });
+      }
+      return res.status(500).send({
         message: "Internal Server Error.",
         err: err.message,
         stack: err.stack,
@@ -63,7 +70,7 @@ const likeCard = (req, res) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
     { $addToSet: { likes: req.user._id } }, // добавить _id в массив, если его там нет
-    { new: true },
+    { new: true }
   )
     .then((card) => {
       if (!card) {
@@ -92,7 +99,7 @@ const unlikeCard = (req, res) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
     { $pull: { likes: req.user._id } }, // добавить _id в массив, если его там нет
-    { new: true },
+    { new: true }
   )
     .then((card) => {
       if (!card) {

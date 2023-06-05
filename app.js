@@ -37,5 +37,6 @@ app.use((req, res, next) => {
   next();
 });
 app.use(router);
+app.get("*", (req, res) => res.status(404).send({ message: "Page not Found" }));
 
 app.listen(PORT, () => console.log(`Server is running on port: ${PORT}`));
