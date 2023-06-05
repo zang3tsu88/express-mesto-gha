@@ -18,10 +18,3 @@ module.exports = router;
 
 // Test User ObjId
 // 647a3fd1d9577763a78fa33c
-
-// {
-//   "name": "Andre",
-//   "about": "Dev",
-//   "avatar":
-//     "https://zamanilka.ru/wp-content/uploads/2021/10/boy-neon-mask-201021.png",
-// }

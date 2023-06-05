@@ -17,9 +17,9 @@ const getUserById = (req, res) => {
   User.findById(req.params.userId)
     .then((users) => {
       if (!users) {
-        return res
-          .status(404)
-          .send({ message: "User with such id not found." });
+        return res.status(404).send({
+          message: "User with such id not found.",
+        });
       }
       return res.send(users);
     })
@@ -44,7 +44,14 @@ const createUser = (req, res) => {
   User.create({ name, about, avatar })
     .then((user) => res.status(201).send(user))
     .catch((err) => {
-      res.status(500).send({
+      if (err.name === "ValidationError") {
+        return res.status(400).send({
+          message: "Entered invalid data.",
+          err: err.message,
+          stack: err.stack,
+        });
+      }
+      return res.status(500).send({
         message: "Internal Server Error.",
         err: err.message,
         stack: err.stack,
@@ -57,14 +64,27 @@ const updateProfile = (req, res) => {
   User.findByIdAndUpdate(
     req.user._id,
     { name, about },
-    { new: true, runValidators: true, upsert: true }
+    { new: true, runValidators: true }
     // нужны ли все, или достаточно new: true... ???
+    // , upsert: true
   )
     .then((user) => {
-      res.send(user);
+      if (!user) {
+        return res.status(404).send({
+          message: "User with such id not found.",
+        });
+      }
+      return res.send(user);
     })
     .catch((err) => {
-      res.status(500).send({
+      if (err.name === "ValidationError") {
+        return res.status(400).send({
+          message: "Entered invalid data.",
+          err: err.message,
+          stack: err.stack,
+        });
+      }
+      return res.status(500).send({
         message: "Internal Server Error.",
         err: err.message,
         stack: err.stack,
@@ -80,10 +100,22 @@ const updateAvatar = (req, res) => {
     // нужны ли все, или достаточно new: true... ???
   )
     .then((user) => {
-      res.send(user);
+      if (!user) {
+        return res.status(404).send({
+          message: "User with such id not found.",
+        });
+      }
+      return res.send(user);
     })
     .catch((err) => {
-      res.status(500).send({
+      if (err.name === "ValidationError") {
+        return res.status(400).send({
+          message: "Entered invalid data.",
+          err: err.message,
+          stack: err.stack,
+        });
+      }
+      return res.status(500).send({
         message: "Internal Server Error.",
         err: err.message,
         stack: err.stack,

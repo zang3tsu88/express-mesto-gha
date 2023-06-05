@@ -10,7 +10,7 @@
     "lint:fix": "npx eslint . --fix"
   },
   "keywords": [],
-  "author": "",
+  "author": "Andrei Maximenya",
   "license": "ISC",
   "devDependencies": {
     "eslint": "^8.41.0",
