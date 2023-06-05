@@ -64,7 +64,7 @@ const updateProfile = (req, res) => {
   User.findByIdAndUpdate(
     req.user._id,
     { name, about },
-    { new: true, runValidators: true }
+    { new: true, runValidators: true },
     // нужны ли все, или достаточно new: true... ???
     // , upsert: true
   )
@@ -96,7 +96,7 @@ const updateAvatar = (req, res) => {
   User.findByIdAndUpdate(
     req.user._id,
     { avatar },
-    { new: true, runValidators: true, upsert: true }
+    { new: true, runValidators: true, upsert: true },
     // нужны ли все, или достаточно new: true... ???
   )
     .then((user) => {
