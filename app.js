@@ -1,5 +1,5 @@
 // const STATUS_CODE_MESSAGE = require("http").STATUS_CODES;
-// const http2 = require("http2").constants;
+const http2 = require("http2").constants;
 const express = require("express");
 const mongoose = require("mongoose");
 const router = require("./routes/routes");
@@ -14,14 +14,14 @@ const PORT = process.env.PORT || 3000;
  *
 // res.status(http2.constants.HTTP_STATUS_INTERNAL_SERVER_ERROR).send({
 //   // message: "Internal Server Error.",
-//   message: http.STATUS_CODES[500],
+//   message: http.STATUS_CODES[http2.HTTP_STATUS_INTERNAL_SERVER_ERROR],
 //   err: err.message,
 //   stack: err.stack,
 // });
 
 Можно например так наверное.. но тоже не понятно насколько это целесообразно
-console.log(STATUS_CODE_MESSAGE[400]);  // Bad Request
-console.log(http2.HTTP_STATUS_BAD_REQUEST);  // 400
+console.log(STATUS_CODE_MESSAGE[http2.HTTP_STATUS_BAD_REQUEST]);  // Bad Request
+console.log(http2.HTTP_STATUS_BAD_REQUEST);  // http2.HTTP_STATUS_BAD_REQUEST
  */
 mongoose
   .connect("mongodb://127.0.0.1:27017/mestodb")
@@ -37,6 +37,8 @@ app.use((req, res, next) => {
   next();
 });
 app.use(router);
-app.use("*", (req, res) => res.status(404).send({ message: "Page not Found" }));
+app.use("*", (req, res) => {
+  res.status(http2.HTTP_STATUS_NOT_FOUND).send({ message: "Page not Found" });
+});
 
 app.listen(PORT, () => console.log(`Server is running on port: ${PORT}`));
