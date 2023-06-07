@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const cardSchema = new mongoose.Schema({
   name: {
@@ -13,15 +13,14 @@ const cardSchema = new mongoose.Schema({
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    ref: 'user',
     required: true,
   },
   likes: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      // default: [],
-      // вроде массив и так по умолчанию пустой, так что это поле не надо.
+      ref: 'user',
+      default: [],
     },
   ],
   createdAt: {
@@ -30,14 +29,4 @@ const cardSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Card", cardSchema);
-/**
- *
- * Вопрос. Как лучше писать, с маленькой или большой?
- *
- * Судя по документации и другим ресурсам, модели писать с большой буквы
- * Монгус фоном делает 2 вещи: добавляет "s"(множественное число),
- * И из заглавной преобразует в маленькую букву.
- * https://samwize.com/2014/03/07/what-mongoose-never-explain-to-you-on-case-sentivity/
- *
- *  */
+module.exports = mongoose.model('card', cardSchema);

@@ -1,5 +1,5 @@
-const http2 = require("http2").constants;
-const User = require("../models/User");
+const http2 = require('http2').constants;
+const User = require('../models/User');
 
 const getUsers = (req, res) => {
   User.find({})
@@ -8,7 +8,7 @@ const getUsers = (req, res) => {
     })
     .catch((err) => {
       res.status(http2.HTTP_STATUS_INTERNAL_SERVER_ERROR).send({
-        message: "Internal Server Error.",
+        message: 'Internal Server Error.',
         err: err.message,
         stack: err.stack,
       });
@@ -20,21 +20,21 @@ const getUserById = (req, res) => {
     .then((users) => {
       if (!users) {
         return res.status(http2.HTTP_STATUS_NOT_FOUND).send({
-          message: "User with such id not found.",
+          message: 'User with such id not found.',
         });
       }
       return res.send(users);
     })
     .catch((err) => {
-      if (err.name === "CastError") {
+      if (err.name === 'CastError') {
         return res.status(http2.HTTP_STATUS_BAD_REQUEST).send({
-          message: "Entered invalid data.",
+          message: 'Entered invalid data.',
           err: err.message,
           stack: err.stack,
         });
       }
       return res.status(http2.HTTP_STATUS_INTERNAL_SERVER_ERROR).send({
-        message: "Internal Server Error.",
+        message: 'Internal Server Error.',
         err: err.message,
         stack: err.stack,
       });
@@ -46,15 +46,15 @@ const createUser = (req, res) => {
   User.create({ name, about, avatar })
     .then((user) => res.status(http2.HTTP_STATUS_CREATED).send(user))
     .catch((err) => {
-      if (err.name === "ValidationError") {
+      if (err.name === 'ValidationError') {
         return res.status(http2.HTTP_STATUS_BAD_REQUEST).send({
-          message: "Entered invalid data.",
+          message: 'Entered invalid data.',
           err: err.message,
           stack: err.stack,
         });
       }
       return res.status(http2.HTTP_STATUS_INTERNAL_SERVER_ERROR).send({
-        message: "Internal Server Error.",
+        message: 'Internal Server Error.',
         err: err.message,
         stack: err.stack,
       });
@@ -66,28 +66,26 @@ const updateProfile = (req, res) => {
   User.findByIdAndUpdate(
     req.user._id,
     { name, about },
-    { new: true, runValidators: true }
-    // нужны ли все, или достаточно new: true... ???
-    // , upsert: true
+    { new: true, runValidators: true },
   )
     .then((user) => {
       if (!user) {
         return res.status(http2.HTTP_STATUS_NOT_FOUND).send({
-          message: "User with such id not found.",
+          message: 'User with such id not found.',
         });
       }
       return res.send(user);
     })
     .catch((err) => {
-      if (err.name === "ValidationError") {
+      if (err.name === 'ValidationError') {
         return res.status(http2.HTTP_STATUS_BAD_REQUEST).send({
-          message: "Entered invalid data.",
+          message: 'Entered invalid data.',
           err: err.message,
           stack: err.stack,
         });
       }
       return res.status(http2.HTTP_STATUS_INTERNAL_SERVER_ERROR).send({
-        message: "Internal Server Error.",
+        message: 'Internal Server Error.',
         err: err.message,
         stack: err.stack,
       });
@@ -98,27 +96,26 @@ const updateAvatar = (req, res) => {
   User.findByIdAndUpdate(
     req.user._id,
     { avatar },
-    { new: true, runValidators: true, upsert: true }
-    // нужны ли все, или достаточно new: true... ???
+    { new: true, runValidators: true },
   )
     .then((user) => {
       if (!user) {
         return res.status(http2.HTTP_STATUS_NOT_FOUND).send({
-          message: "User with such id not found.",
+          message: 'User with such id not found.',
         });
       }
       return res.send(user);
     })
     .catch((err) => {
-      if (err.name === "ValidationError") {
+      if (err.name === 'ValidationError') {
         return res.status(http2.HTTP_STATUS_BAD_REQUEST).send({
-          message: "Entered invalid data.",
+          message: 'Entered invalid data.',
           err: err.message,
           stack: err.stack,
         });
       }
       return res.status(http2.HTTP_STATUS_INTERNAL_SERVER_ERROR).send({
-        message: "Internal Server Error.",
+        message: 'Internal Server Error.',
         err: err.message,
         stack: err.stack,
       });

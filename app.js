@@ -8,20 +8,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 /**
- * Я видел рекомендации использовать статус коды из http2,
- * но я не очень пойму насколько это целесообразно(по крайней мере в этом
- * проекте) Ниже пример реализации. Не слишком ли ради пары строк.
- *
-// res.status(http2.constants.HTTP_STATUS_INTERNAL_SERVER_ERROR).send({
-//   // message: "Internal Server Error.",
-//   message: http.STATUS_CODES[http2.HTTP_STATUS_INTERNAL_SERVER_ERROR],
-//   err: err.message,
-//   stack: err.stack,
-// });
-
-Можно например так наверное.. но тоже не понятно насколько это целесообразно
-console.log(STATUS_CODE_MESSAGE[http2.HTTP_STATUS_BAD_REQUEST]);  // Bad Request
-console.log(http2.HTTP_STATUS_BAD_REQUEST);  // http2.HTTP_STATUS_BAD_REQUEST
+ * Вы написали "Текст необязательно связывать именно с кодом. ",
+ * Я не очень понял, о чем вы. Можно точнее?
  */
 mongoose
   .connect("mongodb://127.0.0.1:27017/mestodb")
