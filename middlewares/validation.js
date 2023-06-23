@@ -1,5 +1,5 @@
 const { celebrate, Joi, Segments } = require('celebrate');
-// const URL_REGEX = require('../utils/constants');
+const URL_REGEX = require('../utils/constants');
 
 const validateSignUp = celebrate({
   [Segments.BODY]: Joi.object().keys({
@@ -27,7 +27,7 @@ const validateUpdateProfile = celebrate({
 
 const validateUpdateAvatar = celebrate({
   [Segments.BODY]: Joi.object().keys({
-    avatar: Joi.string().uri(),
+    avatar: Joi.string().pattern(new RegExp(URL_REGEX)),
   }),
 });
 
