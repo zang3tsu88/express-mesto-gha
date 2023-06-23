@@ -39,13 +39,13 @@ const validateUserId = celebrate({
 
 const validateCardId = celebrate({
   [Segments.PARAMS]: Joi.object().keys({
-    userId: Joi.string().hex().length(24),
+    cardId: Joi.string().hex().length(24),
   }),
 });
 
 const validateCreateCard = celebrate({
   [Segments.BODY]: Joi.object().keys({
-    name: Joi.string().min(2).max(30),
+    name: Joi.string().required().min(2).max(30),
     link: Joi.string().required().pattern(URL_REGEX),
   }),
 });
