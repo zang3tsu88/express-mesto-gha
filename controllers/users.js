@@ -13,7 +13,7 @@ const getUsers = (req, res, next) => {
     .then((users) => res.send(users))
     .catch(next);
 };
-//  review check getUserInfo
+
 const getUserInfo = (req, res, next) => {
   User.findById(req.user._id)
     .then((user) => res.send(user))
@@ -91,11 +91,10 @@ const login = (req, res, next) => {
   User.findUserByCredentials(req.body.email, req.body.password)
     .then((user) => {
       const token = jwt.sign({ _id: user._id }, SECRET_KEY, { expiresIn: '7d' });
-      // console.log(token);
+
       res.cookie('jwt', token, { httpOnly: true }).send({ token });
     })
     .catch((err) => {
-      console.log(err);
       next(err);
     });
 };
