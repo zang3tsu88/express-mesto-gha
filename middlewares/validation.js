@@ -5,7 +5,7 @@ const validateSignUp = celebrate({
   [Segments.BODY]: Joi.object().keys({
     name: Joi.string().min(2).max(30),
     about: Joi.string().min(2).max(30),
-    avatar: Joi.string().uri(),
+    avatar: Joi.string().pattern(new RegExp(URL_REGEX)),
     email: Joi.string().email().required(),
     password: Joi.string().required().min(6),
   }),
@@ -46,10 +46,7 @@ const validateCardId = celebrate({
 const validateCreateCard = celebrate({
   [Segments.BODY]: Joi.object().keys({
     name: Joi.string().min(2).max(30),
-    about: Joi.string().min(2).max(30),
-    avatar: Joi.string().uri(),
-    email: Joi.string().email().required(),
-    password: Joi.string().required().min(6),
+    link: Joi.string().required().pattern(new RegExp(URL_REGEX)),
   }),
 });
 
