@@ -7,7 +7,6 @@ const errorHandler = (err, req, res, next) => {
     message: statusCode === 500
       ? 'Internal Server Error has occured'
       : message,
-    stack: err.stack,
   });
 
   next();
