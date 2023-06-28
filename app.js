@@ -6,6 +6,10 @@ const rateLimit = require('express-rate-limit');
 const { errors } = require('celebrate');
 const router = require('./routes/routes');
 const errorHandler = require('./middlewares/errorHandler');
+const {
+  requestLogger,
+  errorLogger,
+} = require('./middlewares/logger');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -27,7 +31,11 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(helmet());
 
+app.use(requestLogger);
+
 app.use(router);
+
+app.use(errorLogger);
 
 app.use(errors());
 app.use(errorHandler);
